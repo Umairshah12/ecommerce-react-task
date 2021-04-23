@@ -51,7 +51,7 @@ function AddNewItems(props) {
       <div className="header">
         <h3>Add New Items</h3>
       </div>
-      <form onSubmit={handleSubmitForm}>
+      <form>
         <div className="input-row">
           <TextField
             id="outlined-helperText"

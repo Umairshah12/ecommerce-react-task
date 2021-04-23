@@ -1,13 +1,35 @@
+
 export const ADD_TO_CART = "ADD_TO_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const FETCH_PRODUCT_SUCCESS = "FETCH_PRODUCT_SUCCESS";
 export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 export const ADD_NEW_ITEMS = "ADD_NEW_ITEMS";
+export const ERRORS = "ERRORS";
 
-export const fetchProductListSuccess = (products) => {
+ const fetchProductListSuccess = (products) => {
   return {
     type: FETCH_PRODUCT_SUCCESS,
     payload: products,
+  };
+};
+
+ const fetchProductListFailure = (error) => {
+  return {
+    type: ERRORS,
+    payload: error,
+  };
+};
+
+
+export const fetchProducts = () => {
+  return async function (dispatch) {
+    try {
+      const res = await fetch("http://localhost:3000/items")       
+       const products = await res.json();
+       dispatch(fetchProductListSuccess(products));
+    } catch (error) {
+       dispatch(fetchProductListFailure(error));
+    }    
   };
 };
 

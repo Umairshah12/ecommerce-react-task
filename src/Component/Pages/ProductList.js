@@ -3,29 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import currencyFormater from "currency-formatter";
 import {
-  fetchProductListSuccess,
+  fetchProducts,
   AddToCart,
 } from "../../Redux/Action/CartAction";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 function ProductList() {
-  const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
+
+  let products = useSelector((state) => state.CartItemReducer.products);
+  let error = useSelector((state) => state.CartItemReducer.errorMessage);
 
   let inCart = useSelector((state) => state.CartItemReducer.inCart);
   const inCartItems = localStorage.getItem("IncartData");
   inCart = inCartItems && JSON.parse(inCartItems);
 
   useEffect(() => {
-    async function fetchMyAPI() {
-      let url = "http://localhost:3000/items";
-      let response = await fetch(url);
-      response = await response.json();
-      dispatch(fetchProductListSuccess(response));
-      console.log("images", response);
-      setProducts(response);
-    }
-    fetchMyAPI();
+   dispatch(fetchProducts())
   }, []);
 
   return (
@@ -35,6 +29,7 @@ function ProductList() {
           {products &&
             products.map((item) => {
               // console.log("image", item.img);
+              // console.log("image", item.img.includes("https"));
               return (
                 <div className="col-3 my-4" key={item.id}>
                   <div className="product">

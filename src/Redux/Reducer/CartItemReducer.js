@@ -4,6 +4,7 @@ import {
   CLEAR_CART,
   FETCH_PRODUCT_SUCCESS,
   ADD_NEW_ITEMS,
+  ERRORS
 } from "../Action/CartAction";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   totalPrice: 0,
   totalQuantity: 0,
   inCart: [],
+  errorMessage:""
 };
 
 export function CartItemReducer(state = initialState, action) {
@@ -21,6 +23,13 @@ export function CartItemReducer(state = initialState, action) {
         ...state,
         products: action.payload,
       };
+    
+    case ERRORS:
+      return {
+        ...state,
+        products: [],
+        errorMessage: action.payload
+      }
 
     case ADD_NEW_ITEMS:
       return {
@@ -52,6 +61,7 @@ export function CartItemReducer(state = initialState, action) {
 
       const cartData = localStorage.getItem("addData");
       let res = cartData && JSON.parse(cartData);
+      // let allPrice = res.reduce((prev, current) => prev + +current.price, 0);
       let allPrice = res.reduce((prev, current) => prev + +current.price, 0);
 
       localStorage.setItem("totalQuantity", JSON.stringify(tQuantity));
@@ -122,7 +132,9 @@ export function CartItemReducer(state = initialState, action) {
         addedItems: [],
         inCart: [],
       };
+    
 
+    
     default:
       return state;
   }
