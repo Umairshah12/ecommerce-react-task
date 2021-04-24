@@ -4,7 +4,8 @@ import {
   CLEAR_CART,
   FETCH_PRODUCT_SUCCESS,
   ADD_NEW_ITEMS,
-  ERRORS
+  ERRORS,
+  // FETCH_USER_REQUEST
 } from "../Action/CartAction";
 
 const initialState = {
@@ -13,22 +14,32 @@ const initialState = {
   totalPrice: 0,
   totalQuantity: 0,
   inCart: [],
-  errorMessage:""
+  errorMessage: "",
+  // loading:false
 };
 
 export function CartItemReducer(state = initialState, action) {
   switch (action.type) {
+  // case FETCH_USER_REQUEST:
+  //     return {
+  //       ...state,
+  //       loading: true,
+  //     };
+    
     case FETCH_PRODUCT_SUCCESS:
       return {
         ...state,
         products: action.payload,
+        // loading: false,
+        error:""
       };
     
     case ERRORS:
       return {
         ...state,
         products: [],
-        errorMessage: action.payload
+        errorMessage: action.payload,
+        // loading:false
       }
 
     case ADD_NEW_ITEMS:
@@ -49,7 +60,7 @@ export function CartItemReducer(state = initialState, action) {
       let tPrice = state.totalPrice + addedToCart.price * state.totalQuantity;
       let tQuantity = state.totalQuantity + 1;
 
-      localStorage.setItem(
+      localStorage.setItem( 
         "addData",
         JSON.stringify([...state.addedItems, addedToCart])
       );
@@ -61,7 +72,6 @@ export function CartItemReducer(state = initialState, action) {
 
       const cartData = localStorage.getItem("addData");
       let res = cartData && JSON.parse(cartData);
-      // let allPrice = res.reduce((prev, current) => prev + +current.price, 0);
       let allPrice = res.reduce((prev, current) => prev + +current.price, 0);
 
       localStorage.setItem("totalQuantity", JSON.stringify(tQuantity));

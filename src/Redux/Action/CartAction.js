@@ -5,6 +5,7 @@ export const FETCH_PRODUCT_SUCCESS = "FETCH_PRODUCT_SUCCESS";
 export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 export const ADD_NEW_ITEMS = "ADD_NEW_ITEMS";
 export const ERRORS = "ERRORS";
+// export const FETCH_USER_REQUEST = "FETCH_USER_REQUEST";
 
  const fetchProductListSuccess = (products) => {
   return {
@@ -20,10 +21,16 @@ export const ERRORS = "ERRORS";
   };
 };
 
+//  const loadingfunction = () => {
+//   return {
+//     type: FETCH_USER_REQUEST,
+//   };
+// };
 
 export const fetchProducts = () => {
   return async function (dispatch) {
     try {
+      // dispatch(loadingfunction())
       const res = await fetch("http://localhost:3000/items")       
        const products = await res.json();
        dispatch(fetchProductListSuccess(products));
