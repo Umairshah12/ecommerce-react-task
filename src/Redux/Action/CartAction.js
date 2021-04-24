@@ -32,7 +32,8 @@ export const fetchProducts = () => {
     try {
       // dispatch(loadingfunction())
       const res = await fetch("http://localhost:3000/items")       
-       const products = await res.json();
+      const products = await res.json();
+      console.log("products in fetch",products)
        dispatch(fetchProductListSuccess(products));
     } catch (error) {
        dispatch(fetchProductListFailure(error));

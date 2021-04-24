@@ -6,12 +6,14 @@ import Cart from "./Component/Pages/Cart";
 import Navbar from "./Component/Pages/Navbar";
 import Home from "./Component/Pages/Home";
 import { Provider } from "react-redux";
-import store from "./Redux/Store/Store";
+import { store,persistor } from "./Redux/Store/Store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { PersistGate } from 'redux-persist/integration/react';
 
 function App() {
   return (
     <Provider store={store}>
+       <PersistGate loading={null} persistor={persistor}>
       <Router>
         <Navbar />
         <Switch>
@@ -20,7 +22,8 @@ function App() {
           <Route exact path="/checkout-item" component={Cart} />
           <Route exact path="/add-new-item" component={AddNewItems} />
         </Switch>
-      </Router>
+        </Router>
+        </PersistGate>
     </Provider>
   );
 }

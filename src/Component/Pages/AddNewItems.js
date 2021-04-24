@@ -39,9 +39,10 @@ function AddNewItems(props) {
         });
         props.history.push("/");
       } catch (error) {
-        toast("Oops there is some error!", {
-          type: "error",
-        });
+        console.log("error", error.message);
+        // toast("Oops there is some error!", {
+        //   type: "error",
+        // });
       }
     }
   };

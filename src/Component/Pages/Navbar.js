@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
   let { totalQuantity } = useSelector((state) => state.CartItemReducer);
-  totalQuantity = localStorage.getItem("totalQuantity");
 
   return (
     <div className="nav app-color">

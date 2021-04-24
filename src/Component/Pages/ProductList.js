@@ -12,11 +12,10 @@ function ProductList() {
   const dispatch = useDispatch();
 
   let products = useSelector((state) => state.CartItemReducer.products);
-  let error = useSelector((state) => state.CartItemReducer.errorMessage);
 
+  let error = useSelector((state) => state.CartItemReducer.errorMessage);
   let inCart = useSelector((state) => state.CartItemReducer.inCart);
-  const inCartItems = localStorage.getItem("IncartData");
-  inCart = inCartItems && JSON.parse(inCartItems);
+
 
   useEffect(() => {
    dispatch(fetchProducts())
@@ -40,7 +39,6 @@ function ProductList() {
                             ? item.img
                             : `http://localhost:3000${item.img}`
                         }
-                        // src={item.img}
                         alt="product-image"
                       />
                     </div>

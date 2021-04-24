@@ -9,14 +9,10 @@ import { RemoveCartItem, clearCart } from "../../Redux/Action/CartAction";
 function Cart() {
   const dispatch = useDispatch();
   let cartItems = useSelector((state) => state.CartItemReducer.addedItems);
-  const items = localStorage.getItem("addData");
-  cartItems = items && JSON.parse(items);
-
   let totalQuantity = useSelector(
     (state) => state.CartItemReducer.totalQuantity
   );
-  totalQuantity = localStorage.getItem("totalQuantity");
-
+  
   const PriceCount = () => {
     const countItems = cartItems;
     return (
@@ -25,6 +21,7 @@ function Cart() {
     );
   };
   let count = PriceCount();
+  
 
   return (
     <>
