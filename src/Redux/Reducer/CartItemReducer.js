@@ -13,11 +13,9 @@ import {
 const initialState = {
   products: [],
   addedItems: [],
-  totalPrice: 0,
   totalQuantity: 0,
   inCart: [],
   errorMessage: "",
-  cartAddedItems:[]
   // loading:false
 };
 
@@ -60,7 +58,7 @@ export function CartItemReducer(state = initialState, action) {
       let inCartdata = state.products.find(
         (item) => item.id === action.payload
       );
-       let tPrice = state.totalPrice + addedToCart.price * state.totalQuantity;
+
       if (addedToCart) {
         let tQuantity = 1;
         addedToCart.tQuantity = tQuantity;
@@ -68,13 +66,12 @@ export function CartItemReducer(state = initialState, action) {
           ...state,
           addedItems: [...state.addedItems, addedToCart],
           inCart: [...state.inCart, inCartdata],
-          totalPrice: tPrice,
         }
-        } else {
+      }
+      else {
         return {
           ...state,
           addedItems: [...state.addedItems, addedToCart],
-          totalPrice: tPrice,
         };
       }
      
@@ -93,17 +90,17 @@ export function CartItemReducer(state = initialState, action) {
       }
 
     case REMOVE_CART_ITEM:
-      let TotalQuantity = state.totalQuantity - 1;
-      if (TotalQuantity < 0) {
-        TotalQuantity = state.totalQuantity;
-      }
       const removedIncart = state.inCart.filter((item) => {
+        return item.id !== action.payload;
+      });
+
+      const removedAddedItems = state.addedItems.filter((item) => {
         return item.id !== action.payload;
       });
 
       return {
         ...state,
-        addedItems: removedIncart,
+        addedItems: removedAddedItems,
         inCart: removedIncart,
       };
 

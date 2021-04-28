@@ -33,6 +33,7 @@ function Cart() {
   
 
   return (
+    
     <>
       <div className="cart">
         <div className="container">
