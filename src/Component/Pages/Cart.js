@@ -1,26 +1,35 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
+import {Button} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import currencyFormater from "currency-formatter";
-import { RemoveCartItem, clearCart } from "../../Redux/Action/CartAction";
+import { RemoveCartItem, clearCart,IncrementItems,DecrementItems } from "../../Redux/Action/CartAction";
 
 function Cart() {
   const dispatch = useDispatch();
   let cartItems = useSelector((state) => state.CartItemReducer.addedItems);
-  let totalQuantity = useSelector(
-    (state) => state.CartItemReducer.totalQuantity
-  );
+  console.log("cart items",cartItems)
+
+  const totalItems = () => {
+    const countItems = cartItems;
+      return (
+      countItems &&
+      countItems.reduce((prev, current) => prev + +current.tQuantity, 0)
+    );
+  }
   
   const PriceCount = () => {
-    const countItems = cartItems;
-    return (
-      countItems &&
-      countItems.reduce((prev, current) => prev + +current.price, 0)
-    );
+     return  cartItems.reduce((total, product) => total + product.price * product.tQuantity, 0).toFixed(2);
+    // const countItems = cartItems;
+    // return (
+    //   countItems &&
+    //   countItems.reduce((prev, current) => prev + +current.price, 0)
+    // );
   };
   let count = PriceCount();
+  let totalQuantity = totalItems();
   
 
   return (
@@ -39,7 +48,7 @@ function Cart() {
                       <div className="col-2">picture</div>
                       <div className="col-2">Name</div>
                       <div className="col-2">PRICE</div>
-
+                      <div className="col-2">QTY</div>
                       <div className="col-2">Remove</div>
                     </div>
                   </div>
@@ -71,17 +80,44 @@ function Cart() {
                               </div>
                             </div>
                             <div className="col-2">
-                              <div
-                                className="cart-remove"
-                                onClick={() => {
+                              <div className="buttons">
+                                <Button
+                                  size='small'
+                                    className="btn-bg"
+                                    disableElevation
+                                     variant='contained'
+                                   onClick={() => dispatch(IncrementItems(item.id))}                                  
+                                  >
+                                    +
+                                  </Button>
+                              
+                                <p>{item.tQuantity}</p>
+                                {item.tQuantity === 1 ?
+                                    <Button
+                                    size='small'
+                                    disableElevation
+                                    className="btn-bg"
+                                    variant='contained'>
+                                    <DeleteIcon  onClick={() => {
                                   dispatch(RemoveCartItem(item.id));
-                                }}
-                              >
-                                <DeleteIcon />
+                                }} />
+                                </Button>
+                                :
+                                  <Button
+                                    size='small'
+                                    disableElevation
+                                    className="btn-bg"
+                                    variant='contained'
+                                   onClick={() => dispatch(DecrementItems(item.id))}
+                        
+                                  >
+                                    -
+                                  </Button>  }
+                                  
                               </div>
+                              </div>    
                             </div>
                           </div>
-                        </div>
                       );
                     })}
                 </div>
@@ -101,6 +137,9 @@ function Cart() {
                             code: "USD",
                           })}
                         </div>
+                
+                      </div>
+                      <div className="col-12">
                         <button
                           className="clear-cart"
                           onClick={() => {

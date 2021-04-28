@@ -5,6 +5,8 @@ export const FETCH_PRODUCT_SUCCESS = "FETCH_PRODUCT_SUCCESS";
 export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 export const ADD_NEW_ITEMS = "ADD_NEW_ITEMS";
 export const ERRORS = "ERRORS";
+export const INCREMENT_ITEMS = "INCREMENT_ITEMS";
+export const DECREMENT_ITEMS = "DECREMENT_ITEMS";
 // export const FETCH_USER_REQUEST = "FETCH_USER_REQUEST";
 
  const fetchProductListSuccess = (products) => {
@@ -54,6 +56,21 @@ export const AddNewItem = (items) => {
     payload: items,
   };
 };
+
+export const IncrementItems = (id) => {
+  return {
+    type: INCREMENT_ITEMS,
+    payload: id,
+  };
+};
+
+export const DecrementItems = (id) => {
+  return {
+    type: DECREMENT_ITEMS,
+    payload: id,
+  };
+};
+
 
 export const RemoveCartItem = (id) => {
   return {

@@ -8,8 +8,7 @@ import cartImg from "../assets/images/icon.png";
 import { useSelector } from "react-redux";
 
 function Navbar() {
-  let { totalQuantity } = useSelector((state) => state.CartItemReducer);
-
+  let cartItems = useSelector((state) => state.CartItemReducer.addedItems);
   return (
     <div className="nav app-color">
       <div className="main-container">
@@ -28,7 +27,7 @@ function Navbar() {
               <IconButton aria-label="cart">
                 <Badge
                   className="badge"
-                  badgeContent={totalQuantity ? totalQuantity : "0"}
+                  badgeContent={ cartItems.length > 0 ? cartItems.length:  "0"}
                   color="secondary"
                 >
                   <ShoppingCartIcon className="icon-color" />
